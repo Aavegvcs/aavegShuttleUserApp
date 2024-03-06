@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "579815643903",
+    "project_id": "wticoaches-r94qjv",
+    "storage_bucket": "wticoaches-r94qjv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579815643903:android:4576de5c189a1711f00aca",
+        "android_client_info": {
+          "package_name": "com.wti.wticoaches"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW5mY8GpZdkZj2gslB0u3RSaWgymTTybU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

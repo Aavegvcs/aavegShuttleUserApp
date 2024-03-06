@@ -1,0 +1,2 @@
+NSLocationWhenInUseUsageDescription = "Location is Required for your current location";
+PermissionGroupNotification = "Allow Notifications";
