@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'confirm_ride_page_model.dart';
 export 'confirm_ride_page_model.dart';
@@ -199,7 +200,6 @@ class _ConfirmRidePageWidgetState extends State<ConfirmRidePageWidget> {
                     r'''$.userDropPointDistance''',
                   ),
                   totalseats: 1,
-                  paymentid: FFAppState().paymentID,
                   busid: getJsonField(
                     FFAppState().tripTimingData,
                     r'''$.busId''',
@@ -226,7 +226,6 @@ class _ConfirmRidePageWidgetState extends State<ConfirmRidePageWidget> {
                     FFAppState().tripTimingData,
                     r'''$.seatPrice''',
                   ),
-                  razorpayId: FFAppState().paymentID,
                   userBuyPassIds: getJsonField(
                     FFAppState().tripTimingData,
                     r'''$.buyPassIdArray''',
@@ -1291,16 +1290,28 @@ class _ConfirmRidePageWidgetState extends State<ConfirmRidePageWidget> {
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: MediaQuery.sizeOf(context).height * 1.0,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset(
-                      'assets/images/WhatsApp_Image_2024-02-27_at_11.13.31_AM.jpeg',
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
-                      fit: BoxFit.cover,
-                    ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.asset(
+                          'assets/images/Vector.png',
+                          width: 300.0,
+                          height: 200.0,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                      Lottie.asset(
+                        'assets/lottie_animations/whiteBack.json',
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 0.5,
+                        fit: BoxFit.fitWidth,
+                        animate: true,
+                      ),
+                    ],
                   ),
                 );
               }

@@ -218,3 +218,17 @@ String splitString(
     return words.last;
   }
 }
+
+int convertStringToInt(String routeString) {
+  return int.parse(routeString);
+}
+
+String multiply2Double(
+  String price,
+  String discount,
+) {
+  // convert the string price and string discount to double and multiply both
+  double priceDouble = double.parse(price);
+  double discountDouble = double.parse(discount);
+  return (priceDouble * discountDouble).toStringAsFixed(2);
+}

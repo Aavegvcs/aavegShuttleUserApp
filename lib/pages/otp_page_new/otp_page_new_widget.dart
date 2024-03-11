@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'otp_page_new_model.dart';
 export 'otp_page_new_model.dart';
 
@@ -42,8 +41,6 @@ class _OtpPageNewWidgetState extends State<OtpPageNewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -245,8 +242,7 @@ class _OtpPageNewWidgetState extends State<OtpPageNewWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 45.0, 0.0, 0.0),
                             child: RichText(
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor,
+                              textScaler: MediaQuery.of(context).textScaler,
                               text: TextSpan(
                                 children: [
                                   TextSpan(

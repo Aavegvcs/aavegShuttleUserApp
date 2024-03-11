@@ -4,9 +4,10 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'edit_profile_profile_model.dart';
 export 'edit_profile_profile_model.dart';
 
@@ -78,9 +79,22 @@ class _EditProfileProfileWidgetState extends State<EditProfileProfileWidget>
 
     _model.homeAddressController ??= TextEditingController();
     _model.homeAddressFocusNode ??= FocusNode();
-
+    _model.homeAddressFocusNode!.addListener(
+      () async {
+        setState(() {
+          _model.office = false;
+        });
+      },
+    );
     _model.officeAddressController ??= TextEditingController();
     _model.officeAddressFocusNode ??= FocusNode();
+    _model.officeAddressFocusNode!.addListener(
+      () async {
+        setState(() {
+          _model.home = false;
+        });
+      },
+    );
   }
 
   @override
@@ -92,8 +106,6 @@ class _EditProfileProfileWidgetState extends State<EditProfileProfileWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -249,14 +261,17 @@ class _EditProfileProfileWidgetState extends State<EditProfileProfileWidget>
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 10.0, 20.0, 10.0),
-                        child: Text(
-                          FFLocalizations.of(context).getText(
-                            '8bry9gug' /* Name */,
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20.0, 10.0, 20.0, 10.0),
+                          child: Text(
+                            FFLocalizations.of(context).getText(
+                              '8bry9gug' /* Name */,
+                            ),
+                            style: FlutterFlowTheme.of(context).bodyMedium,
                           ),
-                          style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                       ),
                       Padding(
@@ -316,14 +331,13 @@ class _EditProfileProfileWidgetState extends State<EditProfileProfileWidget>
                       ),
                     ],
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               20.0, 10.0, 20.0, 10.0),
                           child: Text(
@@ -333,12 +347,258 @@ class _EditProfileProfileWidgetState extends State<EditProfileProfileWidget>
                             style: FlutterFlowTheme.of(context).bodyMedium,
                           ),
                         ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20.0, 0.0, 20.0, 0.0),
+                        child: TextFormField(
+                          controller: _model.homeAddressController,
+                          focusNode: _model.homeAddressFocusNode,
+                          onChanged: (_) => EasyDebounce.debounce(
+                            '_model.homeAddressController',
+                            const Duration(milliseconds: 2000),
+                            () async {
+                              setState(() {
+                                _model.home = true;
+                                _model.office = false;
+                              });
+                            },
+                          ),
+                          textCapitalization: TextCapitalization.words,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelStyle:
+                                FlutterFlowTheme.of(context).labelMedium,
+                            hintText: getJsonField(
+                              widget.profileData,
+                              r'''$.userInformation.home_location_addressline1''',
+                            ).toString(),
+                            hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0x00E0E3E7),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primary,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            filled: true,
+                            fillColor:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                                20.0, 24.0, 0.0, 24.0),
+                            suffixIcon: const Icon(
+                              Icons.location_on_outlined,
+                              color: Color(0xFF757575),
+                              size: 22.0,
+                            ),
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyMedium,
+                          validator: _model.homeAddressControllerValidator
+                              .asValidator(context),
+                        ),
+                      ),
+                      if (_model.home)
+                        Container(
+                          width: MediaQuery.sizeOf(context).width * 0.9,
+                          height: MediaQuery.sizeOf(context).height * 0.2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
+                          child: FutureBuilder<ApiCallResponse>(
+                            future: LocationApiCall.call(
+                              searchText: _model.homeAddressController.text,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: SpinKitCircle(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 50.0,
+                                    ),
+                                  ),
+                                );
+                              }
+                              final listViewLocationApiResponse =
+                                  snapshot.data!;
+                              return Builder(
+                                builder: (context) {
+                                  final homeAddressChildren =
+                                      LocationApiCall.locationPrediction(
+                                            listViewLocationApiResponse
+                                                .jsonBody,
+                                          )?.toList() ??
+                                          [];
+                                  return ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: homeAddressChildren.length,
+                                    itemBuilder:
+                                        (context, homeAddressChildrenIndex) {
+                                      final homeAddressChildrenItem =
+                                          homeAddressChildren[
+                                              homeAddressChildrenIndex];
+                                      return Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBackground,
+                                        ),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            setState(() {
+                                              _model.homeAddressController
+                                                  ?.text = getJsonField(
+                                                homeAddressChildrenItem,
+                                                r'''$.description''',
+                                              ).toString();
+                                            });
+                                            setState(() {
+                                              _model.home = false;
+                                            });
+                                          },
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 10.0, 0.0, 5.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    const Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  4.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Icon(
+                                                        Icons.location_pin,
+                                                        color:
+                                                            Color(0xFF929292),
+                                                        size: 16.0,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          getJsonField(
+                                                            homeAddressChildrenItem,
+                                                            r'''$.description''',
+                                                          ).toString(),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Rubik',
+                                                                fontSize: 12.0,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Divider(
+                                                thickness: 1.0,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .accent4,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20.0, 10.0, 20.0, 10.0),
+                            child: Text(
+                              FFLocalizations.of(context).getText(
+                                'ln3hqb6b' /* Office Address */,
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyMedium,
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               20.0, 0.0, 20.0, 0.0),
                           child: TextFormField(
-                            controller: _model.homeAddressController,
-                            focusNode: _model.homeAddressFocusNode,
+                            controller: _model.officeAddressController,
+                            focusNode: _model.officeAddressFocusNode,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.officeAddressController',
+                              const Duration(milliseconds: 2000),
+                              () async {
+                                setState(() {
+                                  _model.home = false;
+                                  _model.office = true;
+                                });
+                              },
+                            ),
                             textCapitalization: TextCapitalization.words,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -346,7 +606,7 @@ class _EditProfileProfileWidgetState extends State<EditProfileProfileWidget>
                                   FlutterFlowTheme.of(context).labelMedium,
                               hintText: getJsonField(
                                 widget.profileData,
-                                r'''$.userInformation.home_location_addressline1''',
+                                r'''$.userInformation.office_location_addressline1''',
                               ).toString(),
                               hintStyle:
                                   FlutterFlowTheme.of(context).labelMedium,
@@ -390,88 +650,156 @@ class _EditProfileProfileWidgetState extends State<EditProfileProfileWidget>
                               ),
                             ),
                             style: FlutterFlowTheme.of(context).bodyMedium,
-                            validator: _model.homeAddressControllerValidator
+                            validator: _model.officeAddressControllerValidator
                                 .asValidator(context),
                           ),
                         ),
+                        if (_model.office)
+                          Container(
+                            width: MediaQuery.sizeOf(context).width * 0.9,
+                            height: MediaQuery.sizeOf(context).height * 0.2,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.0),
+                            ),
+                            child: FutureBuilder<ApiCallResponse>(
+                              future: LocationApiCall.call(
+                                searchText: _model.officeAddressController.text,
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: SpinKitCircle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 50.0,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                final listViewLocationApiResponse =
+                                    snapshot.data!;
+                                return Builder(
+                                  builder: (context) {
+                                    final homeAddressChildren =
+                                        LocationApiCall.locationPrediction(
+                                              listViewLocationApiResponse
+                                                  .jsonBody,
+                                            )?.toList() ??
+                                            [];
+                                    return ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: homeAddressChildren.length,
+                                      itemBuilder:
+                                          (context, homeAddressChildrenIndex) {
+                                        final homeAddressChildrenItem =
+                                            homeAddressChildren[
+                                                homeAddressChildrenIndex];
+                                        return Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                          ),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              setState(() {
+                                                _model.officeAddressController
+                                                    ?.text = getJsonField(
+                                                  homeAddressChildrenItem,
+                                                  r'''$.description''',
+                                                ).toString();
+                                              });
+                                              setState(() {
+                                                _model.office = false;
+                                              });
+                                            },
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 10.0, 0.0, 5.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    4.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Icon(
+                                                          Icons.location_pin,
+                                                          color:
+                                                              Color(0xFF929292),
+                                                          size: 16.0,
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            getJsonField(
+                                                              homeAddressChildrenItem,
+                                                              r'''$.description''',
+                                                            ).toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Rubik',
+                                                                  fontSize:
+                                                                      12.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 1.0,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .accent4,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
                       ],
                     ),
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 10.0, 20.0, 10.0),
-                        child: Text(
-                          FFLocalizations.of(context).getText(
-                            'ln3hqb6b' /* Office Address */,
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyMedium,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 20.0, 16.0),
-                        child: TextFormField(
-                          controller: _model.officeAddressController,
-                          focusNode: _model.officeAddressFocusNode,
-                          textCapitalization: TextCapitalization.words,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelStyle:
-                                FlutterFlowTheme.of(context).labelMedium,
-                            hintText: getJsonField(
-                              widget.profileData,
-                              r'''$.userInformation.office_location_addressline1''',
-                            ).toString(),
-                            hintStyle: FlutterFlowTheme.of(context).labelMedium,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00E0E3E7),
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primary,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            filled: true,
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                                20.0, 24.0, 0.0, 24.0),
-                            suffixIcon: const Icon(
-                              Icons.location_on_outlined,
-                              color: Color(0xFF757575),
-                              size: 22.0,
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyMedium,
-                          validator: _model.officeAddressControllerValidator
-                              .asValidator(context),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
@@ -479,7 +807,7 @@ class _EditProfileProfileWidgetState extends State<EditProfileProfileWidget>
                 alignment: const AlignmentDirectional(0.0, 0.05),
                 child: Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 24.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       var shouldSetState = false;

@@ -1,6 +1,5 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'banner_image_model.dart';
 export 'banner_image_model.dart';
 
@@ -35,8 +34,6 @@ class _BannerImageWidgetState extends State<BannerImageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 0.0),
       child: ClipRRect(

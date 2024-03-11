@@ -446,24 +446,41 @@ class _SearchPageDropWidgetState extends State<SearchPageDropWidget> {
                                           await getCurrentUserLocation(
                                               defaultLocation:
                                                   const LatLng(0.0, 0.0));
-                                      setState(() {
-                                        FFAppState().pickupLocation =
-                                            currentUserLocationValue!
-                                                .toString();
-                                        FFAppState().pickupLat = functions
+                                      _model.apiResult1seCopy =
+                                          await LatLongLocationCall.call(
+                                        lat: functions
                                             .getLatLong(
                                                 currentUserLocationValue!, true)
-                                            .toString();
-                                        FFAppState().pickupLong = functions
+                                            .toString(),
+                                        lng: functions
                                             .getLatLong(
                                                 currentUserLocationValue!,
                                                 false)
-                                            .toString();
-                                      });
-                                      setState(() {
-                                        _model.pickupLocationController?.text =
-                                            'Current Location';
-                                      });
+                                            .toString(),
+                                      );
+                                      if ((_model.apiResult1seCopy?.succeeded ??
+                                          true)) {
+                                        setState(() {
+                                          _model.pickupLocationController
+                                              ?.text = getJsonField(
+                                            (_model.apiResult1seCopy
+                                                    ?.jsonBody ??
+                                                ''),
+                                            r'''$.results[0].formatted_address''',
+                                          ).toString();
+                                        });
+                                        setState(() {
+                                          FFAppState().pickupPlaceID =
+                                              getJsonField(
+                                            (_model.apiResult1seCopy
+                                                    ?.jsonBody ??
+                                                ''),
+                                            r'''$.results[0].place_id''',
+                                          ).toString();
+                                        });
+                                      }
+
+                                      setState(() {});
                                     },
                                     child: Container(
                                       width: MediaQuery.sizeOf(context).width *

@@ -88,12 +88,12 @@ class _SetLocationOnMapWidgetState extends State<SetLocationOnMapWidget> {
             children: [
               SizedBox(
                 width: MediaQuery.sizeOf(context).width * 1.0,
-                height: MediaQuery.sizeOf(context).height * 0.75,
+                height: MediaQuery.sizeOf(context).height * 0.7,
                 child: Stack(
                   children: [
                     Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 0.75,
+                      height: MediaQuery.sizeOf(context).height * 0.7,
                       decoration: const BoxDecoration(),
                       child: SizedBox(
                         width: MediaQuery.sizeOf(context).width * 1.0,
@@ -103,11 +103,10 @@ class _SetLocationOnMapWidgetState extends State<SetLocationOnMapWidget> {
                           children: [
                             SizedBox(
                               width: MediaQuery.sizeOf(context).width * 1.0,
-                              height: MediaQuery.sizeOf(context).height * 0.75,
+                              height: MediaQuery.sizeOf(context).height * 0.7,
                               child: custom_widgets.SelectLocation(
                                 width: MediaQuery.sizeOf(context).width * 1.0,
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.75,
+                                height: MediaQuery.sizeOf(context).height * 0.7,
                                 currentLocation: currentUserLocationValue!,
                               ),
                             ),
@@ -195,84 +194,117 @@ class _SetLocationOnMapWidgetState extends State<SetLocationOnMapWidget> {
                     final containerLatLongLocationResponse = snapshot.data!;
                     return Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 0.25,
+                      height: MediaQuery.sizeOf(context).height * 0.3,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            15.0, 0.0, 10.0, 0.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text(
-                              FFLocalizations.of(context).getText(
-                                '83javc6o' /* Set your Destination */,
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 15.0, 0.0, 10.0),
+                              child: Text(
+                                FFLocalizations.of(context).getText(
+                                  '83javc6o' /* Set your Destination */,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: Colors.black,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Rubik',
-                                    color: Colors.black,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
                             ),
                             Divider(
                               thickness: 1.0,
                               color: FlutterFlowTheme.of(context).accent4,
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  getJsonField(
-                                    containerLatLongLocationResponse.jsonBody,
-                                    r'''$.results[0].formatted_address''',
-                                  ).toString().maybeHandleOverflow(
-                                        maxChars: 30,
-                                        replacement: '…',
-                                      ),
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                ),
-                                InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context.safePop();
-                                  },
-                                  child: Container(
-                                    height: 25.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    alignment: const AlignmentDirectional(0.0, 0.0),
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          15.0, 5.0, 15.0, 5.0),
-                                      child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          's1hs9eq4' /* Search */,
+                            SizedBox(
+                              width: MediaQuery.sizeOf(context).width * 1.0,
+                              height: 45.0,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: const AlignmentDirectional(0.0, 0.75),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 10.0, 0.0, 10.0),
+                                          child: Text(
+                                            getJsonField(
+                                              containerLatLongLocationResponse
+                                                  .jsonBody,
+                                              r'''$.results[0].formatted_address''',
+                                            ).toString().maybeHandleOverflow(
+                                                  maxChars: 28,
+                                                  replacement: '…',
+                                                ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16.0,
+                                                ),
+                                          ),
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Rubik',
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.w600,
+                                      ],
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: const AlignmentDirectional(0.96, 0.16),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.safePop();
+                                      },
+                                      child: Container(
+                                        width: 90.0,
+                                        height: 30.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        alignment:
+                                            const AlignmentDirectional(0.0, 0.0),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  15.0, 5.0, 15.0, 5.0),
+                                          child: Text(
+                                            FFLocalizations.of(context).getText(
+                                              's1hs9eq4' /* Search */,
                                             ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -315,8 +347,8 @@ class _SetLocationOnMapWidgetState extends State<SetLocationOnMapWidget> {
                                   'kr7m42x8' /* Confirm Destination */,
                                 ),
                                 options: FFButtonOptions(
-                                  width: MediaQuery.sizeOf(context).width * 1.0,
-                                  height: 40.0,
+                                  width: MediaQuery.sizeOf(context).width * 0.9,
+                                  height: 50.0,
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       24.0, 0.0, 24.0, 0.0),
                                   iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -327,13 +359,15 @@ class _SetLocationOnMapWidgetState extends State<SetLocationOnMapWidget> {
                                       .override(
                                         fontFamily: 'Rubik',
                                         color: Colors.white,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                   elevation: 3.0,
                                   borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(20.0),
                                 ),
                               ),
                             ),

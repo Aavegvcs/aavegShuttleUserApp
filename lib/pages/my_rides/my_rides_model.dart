@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'my_rides_widget.dart' show MyRidesWidget;
 import 'package:flutter/material.dart';
@@ -11,9 +10,6 @@ class MyRidesModel extends FlutterFlowModel<MyRidesWidget> {
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
-
-  // Stores action output result for [Backend Call - API (downloadInvoice)] action in Button widget.
-  ApiCallResponse? download;
 
   /// Initialization and disposal methods.
 

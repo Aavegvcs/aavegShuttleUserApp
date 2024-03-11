@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -274,68 +273,7 @@ class _LoginNewWidgetState extends State<LoginNewWidget> {
                               onPressed: () async {
                                 if (functions.mobileNumberLengthCheck(
                                     _model.mobileNumberController.text)) {
-                                  _model.sendOTP = await BaseChangeAPIsGroup
-                                      .createUserCall
-                                      .call(
-                                    mobile: _model.mobileNumberController.text,
-                                  );
-                                  if ((_model.sendOTP?.succeeded ?? true)) {
-                                    setState(() {
-                                      FFAppState().userID = getJsonField(
-                                        (_model.sendOTP?.jsonBody ?? ''),
-                                        r'''$.userID''',
-                                      );
-                                    });
-                                    if (getJsonField(
-                                      (_model.sendOTP?.jsonBody ?? ''),
-                                      r'''$.signup''',
-                                    )) {
-                                      context.pushNamed(
-                                        'otpPageNew',
-                                        queryParameters: {
-                                          'mobileNumber': serializeParam(
-                                            _model.mobNumber,
-                                            ParamType.String,
-                                          ),
-                                          'newUser': serializeParam(
-                                            false,
-                                            ParamType.bool,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    } else {
-                                      context.pushNamed(
-                                        'otpPageNew',
-                                        queryParameters: {
-                                          'mobileNumber': serializeParam(
-                                            _model.mobNumber,
-                                            ParamType.String,
-                                          ),
-                                          'newUser': serializeParam(
-                                            true,
-                                            ParamType.bool,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    }
-                                  } else {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Error Sending OTP',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        duration: const Duration(milliseconds: 4000),
-                                        backgroundColor: const Color(0xFFBC2227),
-                                      ),
-                                    );
-                                  }
+                                  context.pushNamed('HomePage');
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -351,8 +289,6 @@ class _LoginNewWidgetState extends State<LoginNewWidget> {
                                     ),
                                   );
                                 }
-
-                                setState(() {});
                               },
                               text: FFLocalizations.of(context).getText(
                                 'ycth4gej' /* Proceed */,
@@ -386,8 +322,7 @@ class _LoginNewWidgetState extends State<LoginNewWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 25.0, 0.0, 0.0),
                             child: RichText(
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor,
+                              textScaler: MediaQuery.of(context).textScaler,
                               text: TextSpan(
                                 children: [
                                   TextSpan(

@@ -1,6 +1,5 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'reverse_icons_model.dart';
 export 'reverse_icons_model.dart';
 
@@ -35,8 +34,6 @@ class _ReverseIconsWidgetState extends State<ReverseIconsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return const SizedBox(
       width: 30.0,
       height: 30.0,

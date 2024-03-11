@@ -147,17 +147,32 @@ class _DraggableWidgetState extends State<DraggableWidget> {
                         ],
                       ),
                     if (index == 0)
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 25.0, bottom: 15.0),
-                        child: Text('Bus Stops',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Rubik',
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w700,
-                                )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 25.0),
+                            child: Text('Bus Stops',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w700,
+                                    )),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 20),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/busImage.png',
+                                fit: BoxFit.cover,
+                                width: 60,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     if (index == 0)
                       Divider(
@@ -172,8 +187,8 @@ class _DraggableWidgetState extends State<DraggableWidget> {
                             Align(
                               alignment: AlignmentDirectional(-0.86, -0.19),
                               child: Icon(
-                                Icons.check_circle,
-                                color: Color(0xFF00FF04),
+                                Icons.circle_outlined,
+                                color: Color(0xff2da818),
                                 size: 24,
                               ),
                             ),
@@ -181,7 +196,7 @@ class _DraggableWidgetState extends State<DraggableWidget> {
                             Align(
                               alignment: AlignmentDirectional(-0.86, -0.19),
                               child: Icon(
-                                Icons.circle,
+                                Icons.location_on_outlined,
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                                 size: 24,
@@ -197,23 +212,29 @@ class _DraggableWidgetState extends State<DraggableWidget> {
                                 children: [
                                   Flexible(
                                     flex: 1,
-                                    child: Column(
+                                    child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Text(stops['stopName'].toString(),
+                                        Text(
+                                            stops['stopName']
+                                                .toString()
+                                                .maybeHandleOverflow(
+                                                  maxChars: 25,
+                                                  replacement: '…',
+                                                ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Rubik',
-                                                  fontSize: 14.0,
+                                                  fontSize: 15.0,
                                                   fontWeight: FontWeight.w600,
                                                 )),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8.0),
+                                          padding: const EdgeInsets.only(
+                                              top: 0.0, right: 15.00),
                                           child: Text(() {
                                             if (stops['stopStatus'] == 1) {
                                               String timeString =
@@ -255,7 +276,7 @@ class _DraggableWidgetState extends State<DraggableWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Rubik',
-                                                        fontSize: 12.0,
+                                                        fontSize: 13.0,
                                                         fontWeight:
                                                             FontWeight.w400,
                                                       )),
@@ -271,14 +292,14 @@ class _DraggableWidgetState extends State<DraggableWidget> {
                             Align(
                               alignment: AlignmentDirectional(-0.81, -2.39),
                               child: Container(
-                                width: 4,
+                                width: 2,
                                 height: 20,
                                 decoration: BoxDecoration(
                                   color: () {
                                     if (stops['stopStatus'] == 1) {
-                                      return Color(0xFF00FF04);
+                                      return Color(0xff2da818);
                                     } else if (stops['distanceMeter'] >= 1) {
-                                      return Color(0xFF00FF04);
+                                      return Color(0xff2da818);
                                     } else {
                                       return FlutterFlowTheme.of(context)
                                           .secondaryText;
@@ -291,14 +312,14 @@ class _DraggableWidgetState extends State<DraggableWidget> {
                             Align(
                               alignment: AlignmentDirectional(-0.81, -1.37),
                               child: Container(
-                                width: 4,
+                                width: 2,
                                 height: 20,
                                 decoration: BoxDecoration(
                                   color: () {
                                     if (stops['stopStatus'] == 1) {
-                                      return Color(0xFF00FF04);
+                                      return Color(0xff2da818);
                                     } else if (stops['distanceMeter'] == 2) {
-                                      return Color(0xFF00FF04);
+                                      return Color(0xff2da818);
                                     } else {
                                       return FlutterFlowTheme.of(context)
                                           .secondaryText;

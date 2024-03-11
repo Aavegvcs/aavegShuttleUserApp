@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'emergency_s_o_s_model.dart';
 export 'emergency_s_o_s_model.dart';
@@ -39,8 +38,6 @@ class _EmergencySOSWidgetState extends State<EmergencySOSWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return SizedBox(
       width: double.infinity,
       height: 400.0,
@@ -128,8 +125,11 @@ class _EmergencySOSWidgetState extends State<EmergencySOSWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 30.0),
                       child: FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          await launchUrl(Uri(
+                            scheme: 'tel',
+                            path: '9999999999',
+                          ));
                         },
                         text: FFLocalizations.of(context).getText(
                           'b70dbho9' /* Women Support */,

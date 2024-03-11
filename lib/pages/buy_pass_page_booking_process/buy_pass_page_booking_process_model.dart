@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/instant_timer.dart';
 import 'buy_pass_page_booking_process_widget.dart'
@@ -10,6 +11,8 @@ class BuyPassPageBookingProcessModel
 
   final unfocusNode = FocusNode();
   InstantTimer? statusCheck;
+  // Stores action output result for [Backend Call - API (buyPass)] action in buyPassPageBookingProcess widget.
+  ApiCallResponse? bookingCreated;
 
   /// Initialization and disposal methods.
 

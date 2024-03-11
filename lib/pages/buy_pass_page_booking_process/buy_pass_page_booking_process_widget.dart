@@ -9,6 +9,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'buy_pass_page_booking_process_model.dart';
 export 'buy_pass_page_booking_process_model.dart';
@@ -47,19 +48,52 @@ class _BuyPassPageBookingProcessWidgetState
           }
 
           if (FFAppState().paymentStatus == 1) {
-            ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Payment Successfull',
-                  style: TextStyle(
-                    color: FlutterFlowTheme.of(context).primaryText,
-                  ),
-                ),
-                duration: const Duration(milliseconds: 5000),
-                backgroundColor: const Color(0xFF0CE915),
+            _model.bookingCreated = await BaseChangeAPIsGroup.buyPassCall.call(
+              passID: getJsonField(
+                FFAppState().buyPassObject,
+                r'''$.pass_id''',
               ),
+              userId: 1,
+              routeId: functions.convertStringToInt(widget.routeID!),
+              paymentGatewayId: FFAppState().paymentID,
             );
+            if ((_model.bookingCreated?.succeeded ?? true)) {
+              setState(() {
+                FFAppState().paymentStatus = 0;
+                FFAppState().isLoading = false;
+                FFAppState().pickupLocation = '';
+                FFAppState().dropLocation = '';
+                FFAppState().passSelectValue = 1;
+              });
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Payment Successfull',
+                    style: TextStyle(
+                      color: FlutterFlowTheme.of(context).primaryText,
+                    ),
+                  ),
+                  duration: const Duration(milliseconds: 5000),
+                  backgroundColor: const Color(0xFF0CE915),
+                ),
+              );
+
+              context.goNamed('myPassPage');
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'There was an error while buying the pass',
+                    style: TextStyle(
+                      color: FlutterFlowTheme.of(context).primaryText,
+                    ),
+                  ),
+                  duration: const Duration(milliseconds: 4000),
+                  backgroundColor: const Color(0xFFDD2828),
+                ),
+              );
+            }
           } else {
             if (FFAppState().paymentStatus == 2) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -753,6 +787,11 @@ class _BuyPassPageBookingProcessWidgetState
                                                                             () {
                                                                           FFAppState().isLoading =
                                                                               true;
+                                                                          FFAppState().buyPassObject =
+                                                                              getJsonField(
+                                                                            passDataItem,
+                                                                            r'''$''',
+                                                                          );
                                                                         });
                                                                         await actions
                                                                             .razorpayPayment(
@@ -833,14 +872,29 @@ class _BuyPassPageBookingProcessWidgetState
                       ),
                     );
                   } else {
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.asset(
-                        'assets/images/WhatsApp_Image_2024-02-27_at_11.13.31_AM.jpeg',
-                        width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: MediaQuery.sizeOf(context).height * 1.0,
-                        fit: BoxFit.cover,
-                      ),
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              'assets/images/Vector.png',
+                              width: 300.0,
+                              height: 200.0,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        ),
+                        Lottie.asset(
+                          'assets/lottie_animations/whiteBack.json',
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          height: MediaQuery.sizeOf(context).height * 0.5,
+                          fit: BoxFit.fitWidth,
+                          animate: true,
+                        ),
+                      ],
                     );
                   }
                 },

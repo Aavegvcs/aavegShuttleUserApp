@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'reportanissue_widget.dart' show ReportanissueWidget;
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class ReportanissueModel extends FlutterFlowModel<ReportanissueWidget> {
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
+  // Stores action output result for [Backend Call - API (supportMessage)] action in Button widget.
+  ApiCallResponse? apiResult6y6;
 
   /// Initialization and disposal methods.
 

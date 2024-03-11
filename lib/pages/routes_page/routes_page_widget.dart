@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 import 'routes_page_model.dart';
 export 'routes_page_model.dart';
 
@@ -35,8 +34,6 @@ class _RoutesPageWidgetState extends State<RoutesPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return FutureBuilder<ApiCallResponse>(
       future: BaseChangeAPIsGroup.getAllRoutesCall.call(),
       builder: (context, snapshot) {

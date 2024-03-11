@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'search_page_pickup_widget.dart' show SearchPagePickupWidget;
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class SearchPagePickupModel extends FlutterFlowModel<SearchPagePickupWidget> {
   FocusNode? dropLocationFocusNode;
   TextEditingController? dropLocationController;
   String? Function(BuildContext, String?)? dropLocationControllerValidator;
+  // Stores action output result for [Backend Call - API (latLongLocation)] action in Container widget.
+  ApiCallResponse? apiResult1seCopy;
 
   /// Initialization and disposal methods.
 

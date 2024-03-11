@@ -1,8 +1,8 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'reportanissue_model.dart';
 export 'reportanissue_model.dart';
 
@@ -40,8 +40,6 @@ class _ReportanissueWidgetState extends State<ReportanissueWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return SizedBox(
       width: double.infinity,
       height: 400.0,
@@ -51,7 +49,6 @@ class _ReportanissueWidgetState extends State<ReportanissueWidget> {
             alignment: const AlignmentDirectional(0.0, 0.0),
             child: Container(
               width: double.infinity,
-              height: 400.0,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).primaryBackground,
                 boxShadow: const [
@@ -233,66 +230,132 @@ class _ReportanissueWidgetState extends State<ReportanissueWidget> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(22.0, 10.0, 22.0, 0.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: TextFormField(
-                          controller: _model.textController,
-                          focusNode: _model.textFieldFocusNode,
-                          readOnly: _model.checkboxListTileValue3 == false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelStyle:
-                                FlutterFlowTheme.of(context).labelMedium,
-                            hintText: FFLocalizations.of(context).getText(
-                              'olate0i4' /* Describe your issue here... */,
-                            ),
-                            hintStyle: FlutterFlowTheme.of(context).labelMedium,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                width: 2.0,
+                    if (_model.checkboxListTileValue3 ?? true)
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            22.0, 10.0, 22.0, 0.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: TextFormField(
+                            controller: _model.textController,
+                            focusNode: _model.textFieldFocusNode,
+                            readOnly: _model.checkboxListTileValue3 == false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelStyle:
+                                  FlutterFlowTheme.of(context).labelMedium,
+                              hintText: FFLocalizations.of(context).getText(
+                                'olate0i4' /* Describe your issue here... */,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primary,
-                                width: 2.0,
+                              hintStyle:
+                                  FlutterFlowTheme.of(context).labelMedium,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).error,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
                             ),
+                            style: FlutterFlowTheme.of(context).bodyMedium,
+                            maxLines: 5,
+                            validator: _model.textControllerValidator
+                                .asValidator(context),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyMedium,
-                          maxLines: 5,
-                          validator: _model.textControllerValidator
-                              .asValidator(context),
                         ),
                       ),
-                    ),
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          Navigator.pop(context);
+                          if (_model.checkboxListTileValue1! ||
+                              _model.checkboxListTileValue2! ||
+                              _model.checkboxListTileValue3!) {
+                            _model.apiResult6y6 = await BaseChangeAPIsGroup
+                                .supportMessageCall
+                                .call(
+                              userID: '1',
+                              message: () {
+                                if (_model.checkboxListTileValue1! &&
+                                    _model.checkboxListTileValue2! &&
+                                    _model.checkboxListTileValue3!) {
+                                  return '${_model.checkboxListTileValue1?.toString()},${_model.checkboxListTileValue2?.toString()},${_model.textController.text}';
+                                } else if (_model.checkboxListTileValue1! &&
+                                    _model.checkboxListTileValue2! &&
+                                    !_model.checkboxListTileValue3!) {
+                                  return '${_model.checkboxListTileValue1?.toString()},${_model.checkboxListTileValue2?.toString()}';
+                                } else if (_model.checkboxListTileValue1! &&
+                                    !_model.checkboxListTileValue2! &&
+                                    !_model.checkboxListTileValue3!) {
+                                  return _model.checkboxListTileValue1
+                                      ?.toString();
+                                } else if (!_model.checkboxListTileValue1! &&
+                                    _model.checkboxListTileValue2! &&
+                                    !_model.checkboxListTileValue3!) {
+                                  return _model.checkboxListTileValue2
+                                      ?.toString();
+                                } else {
+                                  return _model.textController.text;
+                                }
+                              }(),
+                            );
+                            if ((_model.apiResult6y6?.succeeded ?? true)) {
+                              Navigator.pop(context);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'There was an Error',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                    ),
+                                  ),
+                                  duration: const Duration(milliseconds: 4000),
+                                  backgroundColor: const Color(0xFFDD2828),
+                                ),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Enter some value',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                  ),
+                                ),
+                                duration: const Duration(milliseconds: 4000),
+                                backgroundColor: const Color(0xFFDD2828),
+                              ),
+                            );
+                          }
+
+                          setState(() {});
                         },
                         text: FFLocalizations.of(context).getText(
                           'krtu21x3' /* Report Issue */,

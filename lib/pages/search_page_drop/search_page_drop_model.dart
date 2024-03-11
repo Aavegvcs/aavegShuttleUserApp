@@ -18,6 +18,8 @@ class SearchPageDropModel extends FlutterFlowModel<SearchPageDropWidget> {
   TextEditingController? dropLocationController;
   String? Function(BuildContext, String?)? dropLocationControllerValidator;
   // Stores action output result for [Backend Call - API (latLongLocation)] action in Container widget.
+  ApiCallResponse? apiResult1seCopy;
+  // Stores action output result for [Backend Call - API (latLongLocation)] action in Container widget.
   ApiCallResponse? latLongAPI;
 
   /// Initialization and disposal methods.

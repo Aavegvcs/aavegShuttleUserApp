@@ -4,7 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'support_page_model.dart';
 export 'support_page_model.dart';
 
@@ -38,8 +38,6 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -216,8 +214,11 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    await launchUrl(Uri(
+                      scheme: 'tel',
+                      path: '9999999999',
+                    ));
                   },
                   text: FFLocalizations.of(context).getText(
                     'lk4xku4s' /* Talk to support agent */,

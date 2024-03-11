@@ -1,10 +1,12 @@
 import '/backend/api_requests/api_calls.dart';
 import '/components/invoice_email/invoice_email_widget.dart';
+import '/components/no_booking/no_booking_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +30,13 @@ class _MyRidesWidgetState extends State<MyRidesWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => MyRidesModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        FFAppState().userTrackingJSONObject = null;
+      });
+    });
 
     _model.tabBarController = TabController(
       vsync: this,
@@ -155,6 +164,23 @@ class _MyRidesWidgetState extends State<MyRidesWidget>
                                                 .jsonBody,
                                             r'''$.presentBookings''',
                                           ).toList();
+                                          if (upcoming.isEmpty) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width *
+                                                        1.0,
+                                                height:
+                                                    MediaQuery.sizeOf(context)
+                                                            .height *
+                                                        1.0,
+                                                child: const NoBookingWidget(
+                                                  text: 'Bookings',
+                                                ),
+                                              ),
+                                            );
+                                          }
                                           return SingleChildScrollView(
                                             primary: false,
                                             child: Column(
@@ -263,9 +289,9 @@ class _MyRidesWidgetState extends State<MyRidesWidget>
                                                                             10.0),
                                                                     child:
                                                                         RichText(
-                                                                      textScaleFactor:
+                                                                      textScaler:
                                                                           MediaQuery.of(context)
-                                                                              .textScaleFactor,
+                                                                              .textScaler,
                                                                       text:
                                                                           TextSpan(
                                                                         children: [
@@ -744,6 +770,13 @@ class _MyRidesWidgetState extends State<MyRidesWidget>
                                                                 FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
+                                                                    setState(
+                                                                        () {
+                                                                      FFAppState()
+                                                                              .userTrackingJSONObject =
+                                                                          null;
+                                                                    });
+
                                                                     context
                                                                         .pushNamed(
                                                                       'trackingPage',
@@ -845,117 +878,100 @@ class _MyRidesWidgetState extends State<MyRidesWidget>
                                                                             8.0),
                                                                   ),
                                                                 ),
-                                                                FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    _model.download =
-                                                                        await BaseChangeAPIsGroup
-                                                                            .downloadInvoiceCall
-                                                                            .call(
-                                                                      bookingID:
-                                                                          getJsonField(
-                                                                        upcomingItem,
-                                                                        r'''$.booking_id''',
-                                                                      ).toString(),
-                                                                    );
-                                                                    if ((_model
-                                                                            .download
-                                                                            ?.succeeded ??
-                                                                        true)) {
-                                                                      ScaffoldMessenger.of(
-                                                                              context)
-                                                                          .showSnackBar(
-                                                                        SnackBar(
-                                                                          content:
-                                                                              Text(
-                                                                            'API Success',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                Builder(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          FFButtonWidget(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      await showDialog(
+                                                                        barrierColor:
+                                                                            const Color(0x74272727),
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (dialogContext) {
+                                                                          return Dialog(
+                                                                            elevation:
+                                                                                0,
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            alignment:
+                                                                                const AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
+                                                                              child: SizedBox(
+                                                                                height: MediaQuery.sizeOf(context).height * 0.3,
+                                                                                width: MediaQuery.sizeOf(context).width * 0.95,
+                                                                                child: InvoiceEmailWidget(
+                                                                                  bookingId: getJsonField(
+                                                                                    upcomingItem,
+                                                                                    r'''$.booking_id''',
+                                                                                  ),
+                                                                                ),
+                                                                              ),
                                                                             ),
-                                                                          ),
-                                                                          duration:
-                                                                              const Duration(milliseconds: 4000),
-                                                                          backgroundColor:
-                                                                              FlutterFlowTheme.of(context).secondary,
-                                                                        ),
-                                                                      );
-                                                                    } else {
-                                                                      ScaffoldMessenger.of(
-                                                                              context)
-                                                                          .showSnackBar(
-                                                                        SnackBar(
-                                                                          content:
-                                                                              Text(
-                                                                            'Fail',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
-                                                                            ),
-                                                                          ),
-                                                                          duration:
-                                                                              const Duration(milliseconds: 4000),
-                                                                          backgroundColor:
-                                                                              FlutterFlowTheme.of(context).secondary,
-                                                                        ),
-                                                                      );
-                                                                    }
-
-                                                                    setState(
-                                                                        () {});
-                                                                  },
-                                                                  text: FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    'auzpidk6' /* Invoice */,
-                                                                  ),
-                                                                  icon: const Icon(
-                                                                    Icons
-                                                                        .file_download_outlined,
-                                                                    size: 18.0,
-                                                                  ),
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    height:
-                                                                        40.0,
-                                                                    padding: const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            24.0,
-                                                                            0.0,
-                                                                            24.0,
-                                                                            0.0),
-                                                                    iconPadding:
-                                                                        const EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    color: FlutterFlowTheme.of(
+                                                                          );
+                                                                        },
+                                                                      ).then((value) =>
+                                                                          setState(
+                                                                              () {}));
+                                                                    },
+                                                                    text: FFLocalizations.of(
                                                                             context)
-                                                                        .tertiary,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleSmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Rubik',
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              14.0,
-                                                                        ),
-                                                                    elevation:
-                                                                        3.0,
-                                                                    borderSide:
-                                                                        const BorderSide(
-                                                                      color: Colors
-                                                                          .transparent,
-                                                                      width:
-                                                                          1.0,
+                                                                        .getText(
+                                                                      'auzpidk6' /* Invoice */,
                                                                     ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
+                                                                    icon: const Icon(
+                                                                      Icons
+                                                                          .file_download_outlined,
+                                                                      size:
+                                                                          18.0,
+                                                                    ),
+                                                                    options:
+                                                                        FFButtonOptions(
+                                                                      height:
+                                                                          40.0,
+                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          24.0,
+                                                                          0.0,
+                                                                          24.0,
+                                                                          0.0),
+                                                                      iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .tertiary,
+                                                                      textStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .titleSmall
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Rubik',
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize:
+                                                                                14.0,
+                                                                          ),
+                                                                      elevation:
+                                                                          3.0,
+                                                                      borderSide:
+                                                                          const BorderSide(
+                                                                        color: Colors
+                                                                            .transparent,
+                                                                        width:
+                                                                            1.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -1016,6 +1032,11 @@ class _MyRidesWidgetState extends State<MyRidesWidget>
                                                 .jsonBody,
                                             r'''$.pastBookings''',
                                           ).toList();
+                                          if (history.isEmpty) {
+                                            return const NoBookingWidget(
+                                              text: 'Bookings',
+                                            );
+                                          }
                                           return SingleChildScrollView(
                                             primary: false,
                                             child: Column(

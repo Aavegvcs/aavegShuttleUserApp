@@ -8,6 +8,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'my_pass_page_model.dart';
 export 'my_pass_page_model.dart';
@@ -62,7 +63,7 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                 FFAppState().buyPassObject,
                 r'''$.route_id''',
               ),
-              paymentGatewayId: 'pay_NiEMrHp7Lub9mU',
+              paymentGatewayId: FFAppState().paymentID,
             );
             if ((_model.bookingCreated?.succeeded ?? true)) {
               setState(() {
@@ -87,6 +88,10 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
               );
             }
           } else {
+            setState(() {
+              FFAppState().isLoading = false;
+              FFAppState().paymentStatus = 0;
+            });
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -683,39 +688,76 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                                                 ),
                                                                                 Padding(
                                                                                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                                                                                  child: Container(
-                                                                                    decoration: BoxDecoration(
-                                                                                      color: FlutterFlowTheme.of(context).tertiary,
-                                                                                      borderRadius: BorderRadius.circular(8.0),
-                                                                                    ),
-                                                                                    alignment: const AlignmentDirectional(0.0, 0.0),
-                                                                                    child: Padding(
-                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 0.0, 5.0),
-                                                                                      child: SingleChildScrollView(
-                                                                                        scrollDirection: Axis.horizontal,
-                                                                                        child: Row(
-                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                                                          children: [
-                                                                                            Text(
-                                                                                              FFLocalizations.of(context).getText(
-                                                                                                'bjq4o510' /* Explore Entire Route */,
-                                                                                              ),
-                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                    fontFamily: 'Rubik',
-                                                                                                    color: FlutterFlowTheme.of(context).primaryBackground,
-                                                                                                    fontSize: 10.0,
-                                                                                                  ),
+                                                                                  child: InkWell(
+                                                                                    splashColor: Colors.transparent,
+                                                                                    focusColor: Colors.transparent,
+                                                                                    hoverColor: Colors.transparent,
+                                                                                    highlightColor: Colors.transparent,
+                                                                                    onTap: () async {
+                                                                                      context.pushNamed(
+                                                                                        'EntireRoutePage',
+                                                                                        queryParameters: {
+                                                                                          'routeID': serializeParam(
+                                                                                            getJsonField(
+                                                                                              routeChildrenItem,
+                                                                                              r'''$.route_id''',
                                                                                             ),
-                                                                                            Padding(
-                                                                                              padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
-                                                                                              child: Icon(
-                                                                                                Icons.map_outlined,
-                                                                                                color: FlutterFlowTheme.of(context).primaryBackground,
-                                                                                                size: 12.0,
+                                                                                            ParamType.int,
+                                                                                          ),
+                                                                                          'pickUp': serializeParam(
+                                                                                            getJsonField(
+                                                                                              routeChildrenItem,
+                                                                                              r'''$.stops[0].stopName''',
+                                                                                            ).toString(),
+                                                                                            ParamType.String,
+                                                                                          ),
+                                                                                          'drop': serializeParam(
+                                                                                            functions.getTheLastElementofListString((getJsonField(
+                                                                                              routeChildrenItem,
+                                                                                              r'''$.stops[:].stopName''',
+                                                                                              true,
+                                                                                            ) as List)
+                                                                                                .map<String>((s) => s.toString())
+                                                                                                .toList()),
+                                                                                            ParamType.String,
+                                                                                          ),
+                                                                                        }.withoutNulls,
+                                                                                      );
+                                                                                    },
+                                                                                    child: Container(
+                                                                                      decoration: BoxDecoration(
+                                                                                        color: FlutterFlowTheme.of(context).tertiary,
+                                                                                        borderRadius: BorderRadius.circular(8.0),
+                                                                                      ),
+                                                                                      alignment: const AlignmentDirectional(0.0, 0.0),
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(5.0, 10.0, 0.0, 10.0),
+                                                                                        child: SingleChildScrollView(
+                                                                                          scrollDirection: Axis.horizontal,
+                                                                                          child: Row(
+                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                                                            children: [
+                                                                                              Text(
+                                                                                                FFLocalizations.of(context).getText(
+                                                                                                  'bjq4o510' /* Explore Entire Route */,
+                                                                                                ),
+                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                      fontFamily: 'Rubik',
+                                                                                                      color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                                      fontSize: 10.0,
+                                                                                                    ),
                                                                                               ),
-                                                                                            ),
-                                                                                          ],
+                                                                                              Padding(
+                                                                                                padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                                                                                                child: Icon(
+                                                                                                  Icons.map_outlined,
+                                                                                                  color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                                  size: 12.0,
+                                                                                                ),
+                                                                                              ),
+                                                                                            ],
+                                                                                          ),
                                                                                         ),
                                                                                       ),
                                                                                     ),
@@ -784,7 +826,13 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                           _model.selectedPass)
                                                       .toList();
                                                   return ListView.builder(
-                                                    padding: EdgeInsets.zero,
+                                                    padding:
+                                                        const EdgeInsets.fromLTRB(
+                                                      0,
+                                                      20.0,
+                                                      0,
+                                                      25.0,
+                                                    ),
                                                     primary: false,
                                                     shrinkWrap: true,
                                                     scrollDirection:
@@ -913,7 +961,7 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                                                 0.0),
                                                                             child:
                                                                                 RichText(
-                                                                              textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                                                                              textScaler: MediaQuery.of(context).textScaler,
                                                                               text: TextSpan(
                                                                                 children: [
                                                                                   TextSpan(
@@ -935,9 +983,13 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                                                     style: const TextStyle(),
                                                                                   ),
                                                                                   TextSpan(
-                                                                                    text: FFLocalizations.of(context).getText(
-                                                                                      'c2qcxjos' /* ₹638 */,
-                                                                                    ),
+                                                                                    text: '₹ ${functions.multiply2Double(getJsonField(
+                                                                                          passInfoItem,
+                                                                                          r'''$.pass_price''',
+                                                                                        ).toString(), getJsonField(
+                                                                                          passInfoItem,
+                                                                                          r'''$.pass_discount''',
+                                                                                        ).toString())}',
                                                                                     style: TextStyle(
                                                                                       color: FlutterFlowTheme.of(context).secondaryText,
                                                                                       fontSize: 14.0,
@@ -1108,8 +1160,8 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       children: List.generate(
-                                                          passes.length,
-                                                          (passesIndex) {
+                                                              passes.length,
+                                                              (passesIndex) {
                                                         final passesItem =
                                                             passes[passesIndex];
                                                         return Column(
@@ -1548,7 +1600,10 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                                                           ),
                                                                                         ),
                                                                                         Text(
-                                                                                          FFAppState().pickupLocation.maybeHandleOverflow(
+                                                                                          getJsonField(
+                                                                                            passesItem,
+                                                                                            r'''$.startpointname''',
+                                                                                          ).toString().maybeHandleOverflow(
                                                                                                 maxChars: 20,
                                                                                                 replacement: '…',
                                                                                               ),
@@ -1577,7 +1632,10 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                                                             ),
                                                                                           ),
                                                                                           Text(
-                                                                                            FFAppState().dropLocation.maybeHandleOverflow(
+                                                                                            getJsonField(
+                                                                                              passesItem,
+                                                                                              r'''$.endpointname''',
+                                                                                            ).toString().maybeHandleOverflow(
                                                                                                   maxChars: 20,
                                                                                                   replacement: '…',
                                                                                                 ),
@@ -1591,27 +1649,6 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                                               ),
                                                                             ),
                                                                           ],
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                            15.0,
-                                                                            15.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Text(
-                                                                          FFLocalizations.of(context)
-                                                                              .getText(
-                                                                            'cbw429kv' /* Runs from 8:00 am till 10:30am... */,
-                                                                          ),
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Rubik',
-                                                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                fontSize: 12.0,
-                                                                              ),
                                                                         ),
                                                                       ),
                                                                       Padding(
@@ -1697,7 +1734,11 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                             ),
                                                           ],
                                                         );
-                                                      }),
+                                                      })
+                                                          .addToStart(const SizedBox(
+                                                              height: 20.0))
+                                                          .addToEnd(const SizedBox(
+                                                              height: 30.0)),
                                                     ),
                                                   );
                                                 },
@@ -2080,8 +2121,8 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: List.generate(
-                                                    expiredPass.length,
-                                                    (expiredPassIndex) {
+                                                        expiredPass.length,
+                                                        (expiredPassIndex) {
                                                   final expiredPassItem =
                                                       expiredPass[
                                                           expiredPassIndex];
@@ -2758,7 +2799,11 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                                                       ),
                                                     ],
                                                   );
-                                                }),
+                                                })
+                                                    .addToStart(
+                                                        const SizedBox(height: 20.0))
+                                                    .addToEnd(
+                                                        const SizedBox(height: 30.0)),
                                               ),
                                             );
                                           },
@@ -2776,14 +2821,24 @@ class _MyPassPageWidgetState extends State<MyPassPageWidget> {
                       return Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/Vector.png',
-                              width: MediaQuery.sizeOf(context).width * 0.7,
-                              height: 200.0,
-                              fit: BoxFit.fitWidth,
+                          Align(
+                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/Vector.png',
+                                width: MediaQuery.sizeOf(context).width * 0.7,
+                                height: 200.0,
+                                fit: BoxFit.fitWidth,
+                              ),
                             ),
+                          ),
+                          Lottie.asset(
+                            'assets/lottie_animations/whiteBack.json',
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            height: MediaQuery.sizeOf(context).height * 0.5,
+                            fit: BoxFit.fitWidth,
+                            animate: true,
                           ),
                         ],
                       );

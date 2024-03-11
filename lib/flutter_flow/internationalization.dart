@@ -318,10 +318,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Explore Entire Route',
       'hi': '',
     },
-    'v3x8gdwk': {
-      'en': 'No Routes Available',
-      'hi': '',
-    },
     'an0zxsxw': {
       'en': 'Home',
       'hi': '',
@@ -471,10 +467,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': '   ',
       'hi': '',
     },
-    'c2qcxjos': {
-      'en': '₹638',
-      'hi': '',
-    },
     '7ol12pha': {
       'en': '₹575',
       'hi': '',
@@ -509,10 +501,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     '4vqw6gbt': {
       'en': 'END STOP',
-      'hi': '',
-    },
-    'cbw429kv': {
-      'en': 'Runs from 8:00 am till 10:30am (All Days)',
       'hi': '',
     },
     '76dlfyvt': {

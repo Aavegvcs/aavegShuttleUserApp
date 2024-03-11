@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'login_new_widget.dart' show LoginNewWidget;
 import 'package:flutter/material.dart';
@@ -40,9 +39,6 @@ class LoginNewModel extends FlutterFlowModel<LoginNewWidget> {
     }
     return null;
   }
-
-  // Stores action output result for [Backend Call - API (createUser)] action in Button widget.
-  ApiCallResponse? sendOTP;
 
   /// Initialization and disposal methods.
 

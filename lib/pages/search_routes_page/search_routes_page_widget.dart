@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/components/no_booking/no_booking_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'search_routes_page_model.dart';
 export 'search_routes_page_model.dart';
@@ -106,7 +108,7 @@ class _SearchRoutesPageWidgetState extends State<SearchRoutesPageWidget> {
             icon: Icon(
               Icons.arrow_back_rounded,
               color: FlutterFlowTheme.of(context).primaryText,
-              size: 26.0,
+              size: 30.0,
             ),
             onPressed: () async {
               context.pop();
@@ -165,6 +167,13 @@ class _SearchRoutesPageWidgetState extends State<SearchRoutesPageWidget> {
                           conditionalBuilderSearchRouteApiResponse.jsonBody,
                           r'''$.result[:]''',
                         ).toList();
+                        if (listData.isEmpty) {
+                          return const Center(
+                            child: NoBookingWidget(
+                              text: 'Routes',
+                            ),
+                          );
+                        }
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           primary: false,
@@ -754,19 +763,29 @@ class _SearchRoutesPageWidgetState extends State<SearchRoutesPageWidget> {
                       width: double.infinity,
                       height: MediaQuery.sizeOf(context).height * 1.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       alignment: const AlignmentDirectional(0.0, 0.0),
-                      child: Text(
-                        FFLocalizations.of(context).getText(
-                          'v3x8gdwk' /* No Routes Available */,
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Rubik',
-                              color: FlutterFlowTheme.of(context).tertiary,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w600,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              'assets/images/Vector.png',
+                              width: 300.0,
+                              height: 200.0,
+                              fit: BoxFit.fitWidth,
                             ),
+                          ),
+                          Lottie.asset(
+                            'assets/lottie_animations/whiteBack.json',
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            height: MediaQuery.sizeOf(context).height * 0.5,
+                            fit: BoxFit.cover,
+                            animate: true,
+                          ),
+                        ],
                       ),
                     );
                   }

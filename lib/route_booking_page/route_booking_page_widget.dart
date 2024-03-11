@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 import 'route_booking_page_model.dart';
 export 'route_booking_page_model.dart';
 
@@ -37,8 +36,6 @@ class _RouteBookingPageWidgetState extends State<RouteBookingPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return FutureBuilder<ApiCallResponse>(
       future: BaseChangeAPIsGroup.exploreRoutesCall.call(
         routeID: '2',

@@ -278,7 +278,6 @@ class CreateBookingByPassCall {
     double? usertostopdistance,
     double? busdroptouserdistance,
     int? totalseats,
-    String? paymentid = '',
     int? busid,
     int? bookingtypeid,
     int? tripid,
@@ -286,7 +285,6 @@ class CreateBookingByPassCall {
     String? startStop = '',
     String? endStop = '',
     double? amountExcludingGst,
-    String? razorpayId = '',
     String? userBuyPassIds = '',
   }) async {
     final ffApiRequestBody = '''
@@ -304,7 +302,7 @@ class CreateBookingByPassCall {
   "usertostopdistance": $usertostopdistance,
   "busdroptouserdistance": $busdroptouserdistance,
   "totalseats": $totalseats,
-  "paymentid": "$paymentid",
+  "paymentid": "",
   "busid": $busid,
   "bookingtypeid": $bookingtypeid,
   "tripid": $tripid,
@@ -312,7 +310,7 @@ class CreateBookingByPassCall {
   "startStop": "$startStop",
   "endStop": "$endStop",
   "amountExcludingGst": $amountExcludingGst,
-  "razorpayId": "$razorpayId",
+  "razorpayId": "",
   "userBuyPassIds": "$userBuyPassIds"
 }''';
     return ApiManager.instance.makeApiCall(
@@ -534,12 +532,18 @@ class EditUserCall {
   "username": "$username",
   "useremail": "$useremail",
   "userhomeaddressline1": "$userhomeaddressline1",
-  "userofficeaddressline1": "$userofficeaddressline1"
+  "userofficeaddressline1": "$userofficeaddressline1",
+  "userhomepostalcode": "",
+  "userhomecity": "",
+  "userhomestate": "",
+  "userofficepostalcode": "",
+  "userofficecity": "",
+  "userofficestate": ""
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'editUser',
       apiUrl: '${BaseChangeAPIsGroup.baseUrl}/app/v1/user/editUser',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.PATCH,
       headers: {},
       params: {},
       body: ffApiRequestBody,

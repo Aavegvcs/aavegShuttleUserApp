@@ -173,15 +173,17 @@ class _TestingWidgetState extends State<TestingWidget> {
       if (response.statusCode == 200) {
         print('Inside If Condition');
         final data = jsonDecode(response.body);
-        final latitude = double.parse(data['busTrackingData']['latitude']);
-        final longitude = double.parse(data['busTrackingData']['longitude']);
+
         // final latitude = data['latitude'] as double;
         // final longitude = data['longitude'] as double;
-        print(' ' + latitude.toString() + ' ' + longitude.toString());
+        // print(' ' + latitude.toString() + ' ' + longitude.toString());
         setState(() {
-          dynamicMarkerPosition = latlng.LatLng(latitude, longitude);
           if (data['busTrackingData'] != null &&
               data['busTrackingData'].isNotEmpty) {
+            final latitude = double.parse(data['busTrackingData']['latitude']);
+            final longitude =
+                double.parse(data['busTrackingData']['longitude']);
+            dynamicMarkerPosition = latlng.LatLng(latitude, longitude);
             debugPrint('Entered IF ELSE');
             _addMarker(dynamicMarkerPosition, 'hello', markerIconBus, 0,
                 data['busTrackingData']['name']);
